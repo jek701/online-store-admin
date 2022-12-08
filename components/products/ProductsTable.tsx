@@ -47,7 +47,8 @@ const Index: React.FC<IndexProps> = ({products, loading, success}) => {
             {
                 title: "ID",
                 dataIndex: "_id",
-                key: "_id"
+                key: "_id",
+                fixed: "left"
             },
             {
                 title: "Название",
@@ -65,24 +66,36 @@ const Index: React.FC<IndexProps> = ({products, loading, success}) => {
                 title: "Цена",
                 dataIndex: "price",
                 key: "price",
-                render: (salePrice: number) => {
-                    return salePrice ? salePrice + " BYN" : "-"
+                render: (price: string) => {
+                    return price !== "undefined" ? price + " BYN" : "-"
                 }
             },
             {
                 title: "Скидочная цена",
                 dataIndex: "salePrice",
                 key: "salePrice",
-                render: (salePrice: number) => {
-                    return salePrice ? salePrice + " BYN" : "-"
+                render: (salePrice: string) => {
+                    return salePrice !== "undefined" ? salePrice + " BYN" : "-"
                 }
             },
             {
                 title: "Доступность",
                 dataIndex: "isAvailable",
                 key: "isAvailable",
-                render: (isAvailable: string) => {
-                    return isAvailable === "true" ? <Tag color={"green"}>Доступен</Tag> : <Tag color={"red"}>Недоступен</Tag>
+                filters: [
+                    {
+                        text: "Доступен",
+                        value: true
+                    },
+                    {
+                        text: "Недоступен",
+                        value: false
+                    }
+                ],
+                // @ts-ignore
+                onFilter: (value: boolean, record) => record.isAvailable === value, filterSearch: true,
+                render: (isAvailable: boolean) => {
+                    return isAvailable ? <Tag color={"green"}>Доступен</Tag> : <Tag color={"red"}>Недоступен</Tag>
                 }
             },
             {
@@ -135,6 +148,7 @@ const Index: React.FC<IndexProps> = ({products, loading, success}) => {
                         <div>
                             <Popconfirm title={"Вы уверены?"} onConfirm={() => deleteProduct(value)}>
                                 <Button
+                                    style={{padding: "5px"}}
                                     type={"primary"}
                                     danger
                                 >
@@ -146,7 +160,7 @@ const Index: React.FC<IndexProps> = ({products, loading, success}) => {
                                     setChosenProduct(value)
                                     setUpdateActive(true)
                                 }}
-                                style={{marginTop: "10px"}}
+                                style={{marginTop: "10px", padding: "5px"}}
                                 type={"primary"}
                             >
                                 Изменить
@@ -165,10 +179,13 @@ const Index: React.FC<IndexProps> = ({products, loading, success}) => {
             <Row style={{display: "flex", alignItems: "center", justifyContent: "center", padding: "25px"}}>
                 <Col span={22}>
                     <Table
+                        scroll={{x: 1300}}
                         dataSource={products}
                         columns={columns}
                         onChange={onChange}
                     />
+                    <Button style={{position: "absolute", right: 0, bottom: "-30px", width: "max-content"}} block={true}
+                            onClick={() => setActive(true)}>Добавить продукт</Button>
                 </Col>
             </Row>
             <Row style={{display: "flex", alignItems: "center", justifyContent: "center", padding: "25px"}}>
@@ -178,10 +195,10 @@ const Index: React.FC<IndexProps> = ({products, loading, success}) => {
             </Row>
             <Row style={{display: "flex", alignItems: "center", justifyContent: "center", padding: "25px"}}>
                 <Col span={22}>
-                    {chosenProduct && <ChangeProductModal setActive={setUpdateActive} active={updateActive} tags={removeDuplicates(tags)} product={chosenProduct}/>}
+                    {chosenProduct && <ChangeProductModal setActive={setUpdateActive} active={updateActive}
+                                                          tags={removeDuplicates(tags)} product={chosenProduct}/>}
                 </Col>
             </Row>
-            <Button onClick={() => setActive(true)}>Add Product</Button>
         </>
     } else {
         return <div>
