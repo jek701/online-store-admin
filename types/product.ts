@@ -1,0 +1,21 @@
+export interface Product {
+    _id: string
+    name: string
+    manufacturer: string
+    description: string
+    price: number
+    salePrice?: number
+    images?: string
+    isAvailable?: string
+    tags: string
+    characteristics?: Characteristic[]
+    created_at: string
+    updated_at?: string
+}
+
+
+export interface Characteristic {
+    id: string
+    title: string
+    info: string
+}
