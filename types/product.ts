@@ -19,3 +19,10 @@ export interface Characteristic {
     title: string
     info: string
 }
+
+export interface Category {
+    _id: string
+    name: string
+    created_at: string
+    updated_at: string
+}

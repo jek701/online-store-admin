@@ -29,7 +29,7 @@ const ChangeProductModal: React.FC<ChangeProductModalProps> = ({product, active,
         tags: data?.tags.split(","),
         images: data?.images.split(","),
         created_at: data?.created_at,
-        isAvailable: data?.isAvailable === "true",
+        isAvailable: data?.isAvailable === "true"
     })
 
     const onFinish = (values: Product) => {
