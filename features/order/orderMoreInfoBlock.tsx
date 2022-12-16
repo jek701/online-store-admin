@@ -23,9 +23,7 @@ const OrderMoreInfoBlock: React.FC<OrderMoreInfoBlockProps> = ({id, setActive}) 
     const orderItems = useGetFeedbackTableFilter()
 
     useEffect(() => {
-        setTimeout(() => {
-            dispatch(fetchOrderItems(id))
-        }, 500)
+        dispatch(fetchOrderItems(id))
     }, [])
 
     const useStyles = createUseStyles({
