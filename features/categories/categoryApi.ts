@@ -34,7 +34,7 @@ export const categoryApi = createApi({
                 body: category
             })
         }),
-        // Get related products
+        // Get related product
         getRelatedProducts: builder.query({
             query: (id: string) => `category/relation/${id}`
         })

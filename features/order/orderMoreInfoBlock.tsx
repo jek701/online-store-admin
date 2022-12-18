@@ -1,7 +1,7 @@
 import React, {useEffect} from "react"
 import {useGetOrderByOrderIdQuery} from "./orderApi"
 import {createUseStyles} from "react-jss"
-import {Descriptions, Dropdown, MenuProps, Popconfirm, Space} from "antd"
+import {Button, Descriptions, Dropdown, MenuProps, Popconfirm, Space} from "antd"
 import {useDispatch} from "../../store"
 import {fetchOrderItems} from "./fetchOrderItems"
 import {useGetFeedbackTableFilter} from "./orderSlice"
@@ -11,6 +11,7 @@ import {DownOutlined} from "@ant-design/icons"
 import {ChangeOrderStatus} from "./changeStatus"
 import {numberFormat} from "../../utils/numberFormat"
 import {russianStatus} from "../../utils/returnRussianStatus"
+import {useRouter} from "next/router"
 
 interface OrderMoreInfoBlockProps {
     id: string
@@ -21,6 +22,7 @@ const OrderMoreInfoBlock: React.FC<OrderMoreInfoBlockProps> = ({id, setActive}) 
     const {data, isLoading, isSuccess} = useGetOrderByOrderIdQuery(id)
     const dispatch = useDispatch()
     const orderItems = useGetFeedbackTableFilter()
+    const router = useRouter()
 
     useEffect(() => {
         dispatch(fetchOrderItems(id))
@@ -75,7 +77,7 @@ const OrderMoreInfoBlock: React.FC<OrderMoreInfoBlockProps> = ({id, setActive}) 
             label: (
                 <Popconfirm
                     title="Вы уверены, что хотите изменить статус заказа?"
-                    onConfirm={() => changeStatus({status: "", order_id: id})}
+                    onConfirm={() => changeStatus({status: "waiting", order_id: id})}
                     onCancel={() => console.log("cancel")}
                     okText="Да"
                     cancelText="Нет"
@@ -117,7 +119,7 @@ const OrderMoreInfoBlock: React.FC<OrderMoreInfoBlockProps> = ({id, setActive}) 
             label: (
                 <Popconfirm
                     title="Вы уверены, что хотите изменить статус заказа?"
-                    onConfirm={() => () => changeStatus({status: "readyForDelivery", order_id: id})}
+                    onConfirm={() => changeStatus({status: "readyForDelivery", order_id: id})}
                     onCancel={() => console.log("cancel")}
                     okText="Да"
                     cancelText="Нет"
@@ -167,7 +169,7 @@ const OrderMoreInfoBlock: React.FC<OrderMoreInfoBlockProps> = ({id, setActive}) 
                 <Space direction="vertical" size="middle" style={{width: "100%"}}>
                     <Descriptions bordered column={6} layout="vertical" title="Информация о заказе">
                         <Descriptions.Item label="ID">{data._id}</Descriptions.Item>
-                        <Descriptions.Item label="Адрес">{data.delivery_address}</Descriptions.Item>
+                        <Descriptions.Item label="Адрес"><Button onClick={() => router.push(`https://yandex.ru/maps/?pt=${data.delivery_address.split(",")[1]},${data.delivery_address.split(",")[0]}&z=18&l=map`)}>Посмотреть на карте</Button></Descriptions.Item>
                         <Descriptions.Item label="Метод оплаты">{data.payment_type}</Descriptions.Item>
                         <Descriptions.Item label="Сумма">{data.total_price} BYN</Descriptions.Item>
                         <Descriptions.Item label="Статус">
