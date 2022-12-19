@@ -151,7 +151,37 @@ const Orders = () => {
             key: "status",
             render: (status) => {
                 return <Tag color={returnStatusColor(status)}>{russianStatus(status)}</Tag>
-            }
+            },
+            filters: [
+                {
+                    text: russianStatus("waiting"),
+                    value: "waiting",
+                },
+                {
+                    text: russianStatus("readyForDelivery"),
+                    value: "readyForDelivery",
+                },
+                {
+                    text: russianStatus("readyForPickup"),
+                    value: "readyForPickup",
+                },
+                {
+                    text: russianStatus("delivered"),
+                    value: "delivered",
+                },
+                {
+                    text: russianStatus("closed"),
+                    value: "closed",
+                },
+                {
+                    text: russianStatus("cancelled"),
+                    value: "cancelled",
+                }
+            ],
+            // @ts-ignore
+            onFilter: (value: string, record) => record.status === value,
+            filterSearch: true,
+
         },
         {
             title: "Дата создания",
