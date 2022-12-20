@@ -48,9 +48,11 @@ const ChangeProductModal: React.FC<ChangeProductModalProps> = ({product, active,
     const styles = {
         popUp: {
             position: "fixed",
-            top: "50%",
+            top: "50px",
+            bottom: "50px",
+            overflowY: "scroll",
             left: "50%",
-            transform: "translate(-50%, -50%)",
+            transform: "translateX(-50%)",
             maxWidth: "500px",
             width: "100%",
             padding: "20px",
@@ -60,7 +62,11 @@ const ChangeProductModal: React.FC<ChangeProductModalProps> = ({product, active,
             zIndex: 1000,
             transition: "all 0.3s ease",
             opacity: active ? 1 : 0,
-            pointerEvents: active ? "all" : "none"
+            pointerEvents: active ? "all" : "none",
+            // Remove scrollbars
+            "&::-webkit-scrollbar": {
+                display: "none"
+            }
         },
         bg: {
             position: "fixed",

@@ -59,7 +59,10 @@ const OrderMoreInfoBlock: React.FC<OrderMoreInfoBlockProps> = ({id, setActive}) 
             borderRadius: 28,
             overflowY: "scroll",
             boxShadow: "0 0 25px rgba(0,0,0,0.2)",
-            padding: 20
+            padding: 20,
+            "&::-webkit-scrollbar": {
+                display: "none"
+            }
         }
     })
     const classes = useStyles()

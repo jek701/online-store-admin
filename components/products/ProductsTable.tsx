@@ -176,8 +176,8 @@ const Index: React.FC<IndexProps> = ({products, loading, success}) => {
         }
 
         return <>
-            <Row style={{display: "flex", alignItems: "center", justifyContent: "center", padding: "25px"}}>
-                <Col span={22}>
+            <Row>
+                <Col>
                     <Table
                         scroll={{x: 1300}}
                         dataSource={products}
@@ -188,17 +188,19 @@ const Index: React.FC<IndexProps> = ({products, loading, success}) => {
                             onClick={() => setActive(true)}>Добавить продукт</Button>
                 </Col>
             </Row>
-            <Row style={{display: "flex", alignItems: "center", justifyContent: "center", padding: "25px"}}>
-                <Col span={22}>
+            <Row>
+                <Col>
                     <AddProductModule setActive={setActive} active={active} tags={removeDuplicates(tags)}/>
                 </Col>
             </Row>
-            <Row style={{display: "flex", alignItems: "center", justifyContent: "center", padding: "25px"}}>
-                <Col span={22}>
+            <Row>
+                <Col>
                     {chosenProduct && <ChangeProductModal setActive={setUpdateActive} active={updateActive}
                                                           tags={removeDuplicates(tags)} product={chosenProduct}/>}
                 </Col>
             </Row>
+            <br/>
+            <br/>
         </>
     } else {
         return <div>
